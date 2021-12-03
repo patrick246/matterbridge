@@ -17,8 +17,6 @@ const (
 	default_buffer_size = 100
 )
 
-var messageListenerAdded = false
-
 // NewMessage creates basic message with an ID, a RoomID, and a Msg
 // Takes channel and text
 func (c *Client) NewMessage(channel *models.Channel, text string) *models.Message {
@@ -186,9 +184,9 @@ func (c *Client) SubscribeToMessageStream(channel *models.Channel, msgChannel ch
 		return err
 	}
 
-	if !messageListenerAdded {
+	if !c.messageListenerAdded {
 		c.ddp.CollectionByName("stream-room-messages").AddUpdateListener(messageExtractor{msgChannel, "update"})
-		messageListenerAdded = true
+		c.messageListenerAdded = true
 	}
 
 	return nil

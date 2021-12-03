@@ -164,13 +164,10 @@ func (b *Brocketchat) Send(msg config.Message) (string, error) {
 		}
 	}
 
-	smsg := &models.Message{
-		RoomID: channel.ID,
-		Msg:    msg.Text,
-		PostMessage: models.PostMessage{
-			Avatar: msg.Avatar,
-			Alias:  msg.Username,
-		},
+	smsg := b.c.NewMessage(channel, msg.Text)
+	smsg.PostMessage = models.PostMessage{
+		Avatar: msg.Avatar,
+		Alias:  msg.Username,
 	}
 
 	rmsg, err := b.c.SendMessage(smsg)

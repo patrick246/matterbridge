@@ -12,7 +12,8 @@ import (
 )
 
 type Client struct {
-	ddp *ddp.Client
+	ddp                  *ddp.Client
+	messageListenerAdded bool
 }
 
 // Creates a new instance and connects to the websocket.
